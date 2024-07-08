@@ -52,7 +52,7 @@ jobs:
 
       - name: Choose any SM7150 device in pmbootstrap to build kernel
         run: |
-          cp xiaomi-davinci.cfg ~/.config/pmbootstrap.cfg
+          cp xiaomi-sweet.cfg ~/.config/pmbootstrap.cfg
 
       - name: Compile kernel with envkernel
         run: |
@@ -82,23 +82,6 @@ jobs:
         with:
           name: xiaomi-davinci-${{ env.KERNEL_BRANCH }}
           path: out/*-davinci.img*
-          retention-days: 7
-
-      - name: Build xiaomi-surya
-        run: |
-          cp xiaomi-surya.cfg ~/.config/pmbootstrap.cfg
-          pmbootstrap install --password 147147
-          pmbootstrap export
-          cp /tmp/postmarketOS-export/boot.img out/boot-xiaomi-surya.img
-          cp /tmp/postmarketOS-export/xiaomi-surya.img out/rootfs-xiaomi-surya.img
-          xz -T0 -9e -v out/rootfs-xiaomi-surya.img
-          echo -e "n\nn\ny\n" | pmbootstrap zap
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: xiaomi-surya-${{ env.KERNEL_BRANCH }}
-          path: out/*-surya.img*
           retention-days: 7
 
       - name: Build xiaomi-sweet
